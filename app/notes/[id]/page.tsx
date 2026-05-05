@@ -4,6 +4,34 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { fetchNoteById } from "../../../lib/api";
 import { JSX } from "react/jsx-runtime";
 
+export async function generateMetadata({
+    params,
+}: {
+  params: { id: string };
+}) {
+  const note = await fetchNoteById(params.id);
+  return {
+    title: note.title,
+    description: note.content.slice(0, 160), // Краткое описание для мета-тега
+    openGraph: {
+      title: note.title,
+      description: note.content.slice(0, 160),
+      url: `http://localhost:3000/notes/${params.id}`,
+      siteName: 'Zustand',
+      images: [
+        {
+          url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+          width: 1200,
+          height: 630,
+          alt: note.title,
+        },
+      ],
+      type: 'website',
+    },
+  };
+}
+
+
 // Основной компонент (АСИНХРОННЫЙ = работает на сервере)
 export default (async function NoteDetailsPage({
   // Получаем параметры из URL (в данном случае, id заметки)
