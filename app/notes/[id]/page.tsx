@@ -2,7 +2,7 @@
 import NoteDetailsClient from "./NoteDetails.client";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { fetchNoteById } from "../../../lib/api";
-import { JSX } from "react/jsx-runtime";
+
 
 export async function generateMetadata({
     params,
@@ -33,7 +33,7 @@ export async function generateMetadata({
 
 
 // Основной компонент (АСИНХРОННЫЙ = работает на сервере)
-export default (async function NoteDetailsPage({
+export default async function NoteDetailsPage({
   // Получаем параметры из URL (в данном случае, id заметки)
   params,
 }: {
@@ -50,4 +50,4 @@ export default (async function NoteDetailsPage({
       <NoteDetailsClient />
     </HydrationBoundary>
   );
-}) as unknown as (props: { params: { id: string } }) => Promise<JSX.Element>; // Типизация для асинхронного компонента, который возвращает JSX.Element
+}; // Типизация для асинхронного компонента, который возвращает JSX.Element

@@ -14,3 +14,5 @@ export const tags: string[] = [
   "Shopping",
   "Todo",
 ];
+
+export type Tag = typeof tags[number];

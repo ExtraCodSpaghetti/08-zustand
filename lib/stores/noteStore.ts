@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { persist } from 'zustand/middleware';
+import { Tag } from '@/types/note';
 
 export type NoteDraft = {
   title: string;
   content: string;
-  tag: string;
+  tag: Tag | '';
 };
 
 interface NoteDraftStore {
@@ -20,16 +21,16 @@ const initialDraft: NoteDraft = {
 };
 
 export const useNoteDraftStore = create<NoteDraftStore>()(
-    persist(
+    persist( // Используем middleware persist для сохранения состояния в localStorage
     (set) => ({
   draft: initialDraft,
  
-  setDraft: (note) =>
+  setDraft: (note) => // Функция для обновления черновика заметки
     set(() => ({
       draft: note,
     })),
 
-  clearDraft: () =>
+  clearDraft: () => // Функция для очистки черновика заметки, возвращая его к начальному состоянию
     set(() => ({
       draft: initialDraft,
     })),
